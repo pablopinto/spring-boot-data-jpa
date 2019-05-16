@@ -26,9 +26,16 @@
 			</ul>
 		</div>
 	</nav>
+	
 	<div class="container">
 		<h1 th:text="${titulo}"
 			class="text-secondary border border-success border-top-0 border-left-0 border-right-0"></h1>
+		
+		<div th:object="${cliente}" th:remove="tag">
+		<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+		<li th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
+		</ul>
+		</div>
 		<form th:action="@{/form}" th:object="${cliente}" method="post">
 			<div class="form-group">
 				<label class="col-sm-2 col-form-label">Nombre</label>
@@ -67,7 +74,6 @@
 					<input type="submit" value="Crear Cliente" class="btn btn-primary" />
 				</div>
 			</div>
-			<input type="hidden" th:field="*{id}" />
 		</form>
 	</div>
 </body>
