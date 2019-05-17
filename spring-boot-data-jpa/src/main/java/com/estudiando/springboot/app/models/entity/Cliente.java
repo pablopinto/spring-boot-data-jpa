@@ -1,13 +1,18 @@
 package com.estudiando.springboot.app.models.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -44,6 +49,14 @@ public class Cliente implements Serializable {
 	@DateTimeFormat(pattern="yyyy/MM/dd")
 	private Date createAt;
 	
+	@OneToMany(mappedBy ="cliente"  ,fetch =FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Factura> facturas;
+	
+	public Cliente() {
+		facturas = new ArrayList<Factura>();
+	}
+
+
 	private String foto;
 	
 //	@PrePersist //Metodo para crear Fecha de manera Automatica al introducir en una zona
@@ -102,6 +115,20 @@ public class Cliente implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+
+	public List<Factura> getFactura() {
+		return facturas;
+	}
+
+	public void setFactura(List<Factura> factura) {
+		this.facturas = factura;
+	}
+	
+	public void addFactura(Factura factura) {
+		facturas.add(factura);
+	}
+
 
 	private static final long serialVersionUID = 3752167649395384258L;
 
