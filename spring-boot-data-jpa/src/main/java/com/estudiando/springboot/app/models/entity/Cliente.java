@@ -42,6 +42,8 @@ public class Cliente implements Serializable {
 //	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date createAt;
 	
+	private String foto;
+	
 //	@PrePersist //Metodo para crear Fecha de manera Automatica al introducir en una zona
 //	public void prePersist() {
 //		createAt= new Date();
@@ -85,6 +87,14 @@ public class Cliente implements Serializable {
 
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 
 	public static long getSerialversionuid() {
