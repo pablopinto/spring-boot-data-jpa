@@ -13,16 +13,16 @@ public class MvcConfig implements WebMvcConfigurer{
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 			
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		// TODO Auto-generated method stub
-		WebMvcConfigurer.super.addResourceHandlers(registry);
-		
-		String resourcePath = Paths.get("uploads").toAbsolutePath().toUri().toString(); //Contiene la ruta ya tratada hacia el recurso requerido
-		log.info(resourcePath);
-		
-		registry.addResourceHandler("/uploads/**").addResourceLocations(resourcePath);
-	}
+//	@Override
+//	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//		// TODO Auto-generated method stub
+//		WebMvcConfigurer.super.addResourceHandlers(registry);
+//		
+//		String resourcePath = Paths.get("uploads").toAbsolutePath().toUri().toString(); //Contiene la ruta ya tratada hacia el recurso requerido
+//		log.info(resourcePath);
+//		
+//		registry.addResourceHandler("/uploads/**").addResourceLocations(resourcePath);
+//	}
 
 	
 }
