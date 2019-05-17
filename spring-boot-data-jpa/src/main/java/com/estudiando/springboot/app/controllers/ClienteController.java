@@ -5,9 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,12 +32,16 @@ import com.estudiando.springboot.app.models.entity.Cliente;
 import com.estudiando.springboot.app.models.service.IClienteService;
 import com.estudiando.springboot.app.util.paginator.PageRender;
 
+
+
 @Controller
 @SessionAttributes("cliente")
 public class ClienteController {
 
 	@Autowired
 	private IClienteService clienteService;
+	
+	private final Logger log = LoggerFactory.getLogger(getClass()); // Para hacer debug de los sitios de directorio
 	
 	@GetMapping(value="/ver/{id}")
 	public String ver(@PathVariable(value="id") Long id , Map<String , Object> model , RedirectAttributes flash) {
@@ -91,14 +98,26 @@ public class ClienteController {
 //			Path  directorioRecursos = Paths.get("src//main//resources//static//upload"); Ubicacion de guardado de imagenes en ruta local del proyecto
 //			String rootPath = directorioRecursos.toFile().getAbsolutePath();
 			
-			String rootPath = "C://Temp//uploads"; // Ruta externa al proyecto
+//			String rootPath = "C://Temp//uploads"; // Ruta externa al proyecto
+			
+			String uniqueFilename = UUID.randomUUID().toString() +"_" +foto.getOriginalFilename(); // Identificador unico 
+			Path rootPath = Paths.get("uploads").resolve(uniqueFilename); //ruta relativa del archivo
+			
+			Path rootAbsolutePath = rootPath.toAbsolutePath();
+			
+			log.info("rootPath :" + rootPath);
+			log.info("rootAbsolutePath :" + rootAbsolutePath);
 			
 			try {
-				byte[] bytes = foto.getBytes();
-				Path rutaCompleta = Paths.get(rootPath +"//" + foto.getOriginalFilename());
-				Files.write(rutaCompleta,bytes);
-				flash.addFlashAttribute("info" , "Has subido correctamente '" + foto.getOriginalFilename() + "'");
 				
+//				byte[] bytes = foto.getBytes();
+//				Path rutaCompleta = Paths.get(rootPath +"//" + foto.getOriginalFilename());
+//				Files.write(rutaCompleta,bytes);
+				
+				Files.copy(foto.getInputStream(), rootAbsolutePath); //Hacer de esta manera o de la comentada anteriormente
+				
+				flash.addFlashAttribute("info" , "Has subido correctamente '" + foto.getOriginalFilename() + "'");
+//				flash.addFlashAttribute("info" , "Has subido correctamente '" + rootAbsolutePath + "'"); // Para comprobar que efectivamente el archivo se esta subiendo con el UUID
 				cliente.setFoto(foto.getOriginalFilename());
 				
 			} catch (IOException e) {
