@@ -66,7 +66,7 @@ public class UploadFileServiceImplements implements IUploadFileService {
 	}
 
 	public Path getPath(String filename) {
-		return Paths.get("uploads").resolve(filename).toAbsolutePath();
+		return Paths.get(UPLOADS_FOLDER).resolve(filename).toAbsolutePath();
 	}
 
 }
