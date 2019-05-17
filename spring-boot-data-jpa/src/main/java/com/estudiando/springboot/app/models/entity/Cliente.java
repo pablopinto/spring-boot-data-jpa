@@ -15,6 +15,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 //import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -39,7 +41,7 @@ public class Cliente implements Serializable {
 	@NotNull
 	@Column(name = "create_at")
 	@Temporal(TemporalType.DATE)
-//	@DateTimeFormat(pattern="dd-MM-yyyy")
+	@DateTimeFormat(pattern="yyyy/MM/dd")
 	private Date createAt;
 	
 	private String foto;
