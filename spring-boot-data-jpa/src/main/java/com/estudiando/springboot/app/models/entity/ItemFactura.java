@@ -1,4 +1,4 @@
-package com.estudiando.springboot.app.models.entity;
+	package com.estudiando.springboot.app.models.entity;
 
 import java.io.Serializable;
 
