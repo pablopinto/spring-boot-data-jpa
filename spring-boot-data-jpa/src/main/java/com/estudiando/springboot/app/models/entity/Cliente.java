@@ -56,7 +56,6 @@ public class Cliente implements Serializable {
 		facturas = new ArrayList<Factura>();
 	}
 
-
 	private String foto;
 	
 //	@PrePersist //Metodo para crear Fecha de manera Automatica al introducir en una zona
@@ -117,15 +116,15 @@ public class Cliente implements Serializable {
 	}
 	
 
-	public List<Factura> getFactura() {
+	public List<Factura> getFacturas() {
 		return facturas;
 	}
 
-	public void setFactura(List<Factura> factura) {
-		this.facturas = factura;
+	public void setFacturas(List<Factura> facturas) {
+		this.facturas = facturas;
 	}
 	
-	public void addFactura(Factura factura) {
+	public void addFacturas(Factura factura) {
 		facturas.add(factura);
 	}
 

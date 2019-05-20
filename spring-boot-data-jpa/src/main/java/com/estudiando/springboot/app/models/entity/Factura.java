@@ -32,23 +32,23 @@ public class Factura implements Serializable {
 	private String observacion;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "crate_at")
+	@Column(name = "create_at")
 	private Date createAt;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Cliente cliente;
-	
-	@OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "factura_id") // clave foranea
 	private List<ItemFactura> items;
-	
+
 	public Factura() {
 		this.items = new ArrayList<ItemFactura>();
 	}
 
 	@PrePersist
 	public void prePersist() {
-		createAt= new Date();
+		createAt = new Date();
 	}
 
 	public Long getId() {
@@ -90,7 +90,7 @@ public class Factura implements Serializable {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
+
 	public List<ItemFactura> getItems() {
 		return items;
 	}
@@ -98,12 +98,23 @@ public class Factura implements Serializable {
 	public void setItems(List<ItemFactura> items) {
 		this.items = items;
 	}
-	
+
 	public void addItemFactura(ItemFactura item) {
 		this.items.add(item);
 	}
 
+	public Double getTotal() {
 
+		Double total = 20.0;
+
+		int size = items.size();
+
+		for (int i = 0; i < size; i++) {
+			total += items.get(i).calcularImporte();
+		}
+		
+		return total;
+	}
 
 	/**
 	 * 
