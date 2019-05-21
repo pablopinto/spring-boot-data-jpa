@@ -74,4 +74,10 @@ public class ClienteServiceImpl implements IClienteService {
 		
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public Producto findProductoById(Long id) {
+		return productoDao.findById(id).orElse(null);
+	}
+
 }

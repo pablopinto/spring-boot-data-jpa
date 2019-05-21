@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.com">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="layout/layout :: head"></head>
 
@@ -15,8 +15,8 @@
 
 				<h4 class="card-title">
 					<a class="btn btn-primary btn-xs"
-								th:href="@{/factura/form/} + ${cliente.id}"
-								th:text="'crear factura'"></a>
+						th:href="@{'/factura/form/' + ${cliente.id}}"
+						th:text="'crear factura'"></a>
 				</h4>
 
 				<img th:if="${#strings.length(cliente.foto)>0}"
@@ -24,7 +24,7 @@
 					class="img-thumbnail rounded float-left" style="max-width: 25%;">
 
 				<ul class="list-group">
-					<li class="list-group-item" th:text="${cliente.nombre}"></li>
+					<li class="list-group-item active" th:text="${cliente.nombre}"></li>
 					<li class="list-group-item" th:text="${cliente.apellido}"></li>
 					<li class="list-group-item" th:text="${cliente.email}"></li>
 					<li class="list-group-item" th:text="${cliente.createAt}"></li>
@@ -34,7 +34,8 @@
 					class="alert alert-info my-4"
 					th:text="'No hay facturas asignadas para el cliente ' + ${cliente.nombre} + '' + ${cliente.apellido}"></div>
 
-				<table class="table table-bordered table-striped my-4">
+				<table th:if="${not #lists.isEmpty(cliente.facturas)}"
+					class="table table-bordered table-striped my-4">
 					<thead class="thead-dark">
 						<tr>
 							<th>Folio</th>
@@ -58,8 +59,10 @@
 		</div>
 	</div>
 
+	<footer th:replace="layout/layout :: footer"></footer>
+
 </body>
 
-<footer th:replace="layout/layout :: footer"></footer>
+
 
 </html>

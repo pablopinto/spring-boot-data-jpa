@@ -82,7 +82,7 @@ public class ClienteController {
 
 		Page<Cliente> clientes = clienteService.findAll(pageRequest);
 
-		PageRender<Cliente> pageRender = new PageRender<>("/listar", clientes);
+		PageRender<Cliente> pageRender = new PageRender<Cliente>("/listar", clientes);
 		model.addAttribute("titulo", "Listado de clientes");
 		model.addAttribute("clientes", clientes);
 		model.addAttribute("page", pageRender);
@@ -97,7 +97,26 @@ public class ClienteController {
 		model.put("cliente", cliente);
 		model.put("titulo", "Formulario de Cliente");
 		return "form";
+	}
 
+	@RequestMapping(value = "/form/{id}")
+	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
+
+		Cliente cliente = null;
+
+		if (id > 0) {
+			cliente = clienteService.findOne(id);
+			if (cliente == null) {
+				flash.addFlashAttribute("error", "El id del cliente no existe en la base de datos");
+				return "redirect:/listar";
+			}
+		} else {
+			flash.addFlashAttribute("error", "El id del cliente no puede ser cero");
+			return "redirect:/listar";
+		}
+		model.put("cliente", cliente);
+		model.put("titulo", "Editar Cliente");
+		return "form";
 	}
 
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
@@ -160,23 +179,4 @@ public class ClienteController {
 		return "redirect:/listar";
 	}
 
-	@RequestMapping(value = "/form/{id}")
-	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
-
-		Cliente cliente = null;
-
-		if (id > 0) {
-			cliente = clienteService.findOne(id);
-			if (cliente == null) {
-				flash.addFlashAttribute("error", "El id del cliente no existe en la base de datos");
-				return "redirect:/listar";
-			}
-		} else {
-			flash.addFlashAttribute("error", "El id del cliente no puede ser cero");
-			return "redirect:/listar";
-		}
-		model.put("cliente", cliente);
-		model.put("titulo", "Editar Cliente");
-		return "form";
-	}
 }

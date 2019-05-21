@@ -17,7 +17,7 @@ public class ItemFactura implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long Id;
+	private Long id;
 
 	private Integer cantidad;
 	
@@ -26,11 +26,11 @@ public class ItemFactura implements Serializable {
 	private Producto producto;
 
 	public Long getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(Long id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public Integer getCantidad() {
@@ -44,6 +44,16 @@ public class ItemFactura implements Serializable {
 	public Double calcularImporte() {	
 		return cantidad.doubleValue()* producto.getPrecio();
 	}
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+
+
 
 	/**
 	 * 

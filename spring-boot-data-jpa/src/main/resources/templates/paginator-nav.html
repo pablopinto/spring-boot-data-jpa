@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.com">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <body>
 
@@ -18,7 +18,7 @@
 </li>
 
 <li th:each="item : ${page.paginas}" class="page-item" th:class="${item.actual? 'page-item active' : 'page-item'}">
-<!-- <span th:if="${item.actual}" th:text="${item.numero}" class="page-link"></span> -->
+<span class="page-link" th:if="${item.actual}" th:text="${item.numero}"></span>
 <a class="page-link"  th:of="${not item.actual}" th:href="@{${page.url}(page=${item.numero-1})}" th:text="${item.numero}"></a>
 </li>
 
