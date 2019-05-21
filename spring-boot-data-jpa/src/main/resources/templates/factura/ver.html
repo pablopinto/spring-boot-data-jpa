@@ -33,9 +33,12 @@
 						th:text="'Fecha: ' + ${factura.createAt}"></li>
 
 				</ul>
-				<div class="alert alert-info my-4" th:if="${#lists.isEmpty(factura.items)}" th:text="'No hay datos para la factura' + $(factura.descripcion)"></div>
+				<div class="alert alert-info my-4"
+					th:if="${#lists.isEmpty(factura.items)}"
+					th:text="'No hay datos para la factura' + $(factura.descripcion)"></div>
 
-				<table th:if="${not #lists.isEmpty(factura.items)}" class="table table-striped table-hover table-bordered my-3">
+				<table th:if="${not #lists.isEmpty(factura.items)}"
+					class="table table-striped table-hover table-bordered my-3">
 
 					<thead>
 
@@ -64,10 +67,25 @@
 
 
 				</table>
-				
-				<h5 class="float-right">Gran Total<span th:text="${factura.total}" class="badge badge-secondary"></span></h5>
 
+				<h5 class="float-right">
+					Gran Total<span th:text="${factura.total}"
+						class="badge badge-secondary"></span>
+				</h5>
 
+				<div class="card border-info mb-4" style="max-width: 20rem;">
+					<div class="card-header">Observaciones</div>
+					<div class="card-body">
+						<p class="card-text" th:text="${factura.observacion}"
+							th:if="${not #strings.isEmpty(factura.observacion)}"></p>
+						<h4 class="card-title"
+							th:if="${#strings.isEmpty(factura.observacion)}"
+							th:text="'No tiene observaciones'"></h4>
+					</div>
+				</div>
+
+				<a th:href="@{'/ver/' + ${factura.cliente.id}}"
+					class="btn btn-light btn-xs">&laquo; volver</a>
 
 			</div>
 		</div>
