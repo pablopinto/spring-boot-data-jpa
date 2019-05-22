@@ -1,5 +1,6 @@
 package com.estudiando.springboot.app;
 
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.estudiando.springboot.app.auth.handler.LoginSuccessHandler;
+import com.estudiando.springboot.app.models.service.JpaUserDetailService;
 
 @EnableGlobalMethodSecurity(securedEnabled=true , prePostEnabled=true)
 @Configuration
@@ -23,7 +25,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
-	DataSource dataSource;
+	private JpaUserDetailService userDetailsService;
+
+//	@Autowired
+//	private DataSource datasource;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -50,12 +55,23 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configurerGlobal(AuthenticationManagerBuilder builder) throws Exception {
 		
-		builder.jdbcAuthentication()
-		.dataSource(dataSource)
-		.passwordEncoder(passwordEncoder)
-		.usersByUsernameQuery("select username , password , enabled from users where username=?")
-		.authoritiesByUsernameQuery("select u.username, a.authority from authorities a inner join users u on (a.user_id=u.id) where u.username=?");
+		builder.userDetailsService(userDetailsService)
+		.passwordEncoder(passwordEncoder);
 		
+		
+		
+		
+		
+		
+		
+		//2nd WAY
+//		builder.jdbcAuthentication()
+//		.dataSource(dataSource)
+//		.passwordEncoder(passwordEncoder)
+//		.usersByUsernameQuery("select username , password , enabled from users where username=?")
+//		.authoritiesByUsernameQuery("select u.username, a.authority from authorities a inner join users u on (a.user_id=u.id) where u.username=?");
+		
+		//1s WAY
 //		PasswordEncoder encoder = passwordEncoder;
 //		UserBuilder users = User.builder().passwordEncoder(encoder::encode);
 //		
